@@ -95,24 +95,28 @@ class Unordered_map
                 }
                 cur = cur->next;
             }
-            if (!flag && cur->kunique!=key)
+            if (!flag && cur->kunique != key)
             {
                 cur->next = getnewNode(key, value);
                 cout << "Node inserted Succesfully" << endl;
             }
             else
             {
-                cout << "Key Already present in map" << endl;   
+                cout << "Key Already present in map" << endl;
             }
         }
         printall();
     }
-    U searchvalue(T key)
+    pair<U, bool> searchvalue(T key)
     {
+        pair<U, bool> ans;
         long long index = getHashIndex(key);
         //cout << "Hash Index : " << index << endl;
         if (hashtable[index] == NULL)
-            return "-1";
+        {
+            ans.second = false;
+            return ans;
+        }
         else
         {
             node *cur = hashtable[index];
@@ -121,10 +125,15 @@ class Unordered_map
                 cur = cur->next;
             }
             if (cur == NULL)
-                return "-1";
+            {
+                ans.second = false;
+                return ans;
+            }
             else
             {
-                return cur->val;
+                ans.second = true;
+                ans.first = cur->val;
+                return ans;
             }
         }
     }
@@ -132,7 +141,7 @@ class Unordered_map
     {
         printall();
         long long index = getHashIndex(key);
-        cout<<"in delete Hash Index : "<<index<<endl;
+        cout << "in delete Hash Index : " << index << endl;
         if (hashtable[index] == NULL)
         {
             printf("\nKey not found in Map");
@@ -196,7 +205,15 @@ int main()
         else if (ch == 2)
         {
             cin >> key;
-            cout << "Value : " << mp.searchvalue(key);
+            pair<string, bool> ans = mp.searchvalue(key);
+            if (ans.second == false)
+            {
+                cout << "No key Found!!!" << endl;
+            }
+            else
+            {
+                cout << "Value : " << ans.first << endl;
+            }
         }
         else if (ch == 3)
         {
