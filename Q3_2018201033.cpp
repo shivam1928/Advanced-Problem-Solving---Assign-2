@@ -2,6 +2,7 @@
 #include <time.h>
 using namespace std;
 
+//swap two element of array
 void swap(long long* a, long long* b)
 {
     long long t = *a;
@@ -9,21 +10,28 @@ void swap(long long* a, long long* b)
     *b = t;
 }
 
-long long partition (vector<long long> &arr,long long start ,long long end) {
-    long long randNum = rand()%(end-start) + start;
+//selecting any random pivot element
+//partition function move pivot to its correct position and return its index
+long long partition (vector<long long> &arr,long long start ,long long end) 
+{
+    long long randNum = (rand()%(end-start+1)) + start;
     //cout<<"Random : "<<randNum<<endl;
     swap(arr[start],arr[randNum]);
     long long i = start + 1;
     long long piv = arr[start] ;    //make the first element as pivot element.
-    for(long long j =start + 1; j <= end ; j++ )  {
-          if ( arr[ j ] < piv) {
-                 swap (arr[ i ],arr[ j ]);
+    for(long long j =start + 1; j <= end ; j++ )  
+    {
+        if ( arr[ j ] < piv) 
+        {
+            swap (arr[ i ],arr[ j ]);
             i += 1;
         }
    }
    swap(arr[start],arr[i-1] ) ;  //put the pivot element in its proper place.
    return i-1;                      //return the position of the pivot
 }
+
+//find kth samllest element using partion function
 long long findNthSmallest(vector<long long> &arr,long long start,long long end,long long k)
 {
     long long size1=arr.size();
@@ -32,7 +40,7 @@ long long findNthSmallest(vector<long long> &arr,long long start,long long end,l
         return -1;
     }
     long long index;
-    while(start<end)
+    while(start<=end)
     {
         index=partition(arr,start,end);
         if(k-1<index)
@@ -48,6 +56,7 @@ long long findNthSmallest(vector<long long> &arr,long long start,long long end,l
         }
     }
 }
+
 int main()
 {
     clock_t start, end;
@@ -62,11 +71,6 @@ int main()
     {
         cin>>arr[i];
     }
-    // cout<<"\nArray Elements are : ";
-    // for(long long i=0;i<n;i++)
-    // {
-    //     cout<<arr[i]<<" ";
-    // }
     start = clock();
     cout<<"\nMy Nth-Smallest : "<<findNthSmallest(arr,0,n-1,k);
     end = clock();

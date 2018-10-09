@@ -1,6 +1,6 @@
 #include <bits/stdc++.h>
 using namespace std;
-#define SIZE 3
+#define SIZE 100
 #define X 31
 
 template <class T, class U>
@@ -74,9 +74,9 @@ class Unordered_map
 
     void insertintohash(T key, U value)
     {
-        printall();
+        //printall();
         long long index = getHashIndex(key);
-        cout << "Hash Index : " << index << endl;
+        //cout << "Hash Index : " << index << endl;
         if (hashtable[index] == NULL)
         {
             hashtable[index] = getnewNode(key, value);
@@ -105,7 +105,7 @@ class Unordered_map
                 cout << "Key Already present in map" << endl;
             }
         }
-        printall();
+        //printall();
     }
     pair<U, bool> searchvalue(T key)
     {
@@ -139,7 +139,7 @@ class Unordered_map
     }
     void deletekey(T key)
     {
-        printall();
+        //printall();
         long long index = getHashIndex(key);
         cout << "in delete Hash Index : " << index << endl;
         if (hashtable[index] == NULL)
@@ -157,7 +157,7 @@ class Unordered_map
                 head = head->next;
                 free(tra);
                 hashtable[index] = head;
-                printall();
+                //printall();
                 return;
             }
             else
@@ -178,7 +178,7 @@ class Unordered_map
                     pre->next = tra->next;
                     free(tra);
                 }
-                printall();
+                //printall();
             }
         }
     }
@@ -194,13 +194,14 @@ int main()
         cout << "\n1.insert";
         cout << "\n2.search";
         cout << "\n3.Delete";
+        //cout << "\n4.Printall";
         cout << "\nEnter You choice : ";
         cin >> ch;
         if (ch == 1)
         {
             cin >> key;
             cin >> value;
-            mp.insertintohash(key, value);
+            mp.insertintohash(key,value);
         }
         else if (ch == 2)
         {
@@ -220,6 +221,10 @@ int main()
             cin >> key;
             mp.deletekey(key);
         }
+        // else if (ch==4)
+        // {
+        //     mp.printall();
+        // }
         else
         {
             cout << "Invalid Argument";

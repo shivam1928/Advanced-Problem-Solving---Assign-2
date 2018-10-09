@@ -1,11 +1,14 @@
 #include<bits/stdc++.h>
 using namespace std;
 int *finalsuffixans;
+
+
 struct suffixArray{
-    int index;
-    int tuple[2];
+    int index; // to keep track of original index of suffix
+    int tuple[2]; //maintain "rank" and "next rank" 
 };
 
+//comparator for comparing two tuple
 bool comfun(struct suffixArray obj1, struct suffixArray obj2)
 {
     if(obj1.tuple[0]==obj2.tuple[0])
@@ -24,6 +27,8 @@ bool comfun(struct suffixArray obj1, struct suffixArray obj2)
         return false;
     }
 }
+
+//create suffix array of given string
 void createsufficArray(string str)
 {
     int size1=str.length();
@@ -50,21 +55,25 @@ void createsufficArray(string str)
 
     for(int j=4;j<(2*size1);j=j*2)
     {   
+        //initialised rank and index of first suffix;
         int curRank=0;
         int preRank=suffobj[0].tuple[0];
         suffobj[0].tuple[0]=curRank;
         suffInd[suffobj[0].index]=0;
 
+        //compute new rank and index for all suffix
         for(int k=1;k<size1;k++)
         {
             int curtuple1=suffobj[k].tuple[0];
             int curtuple2=suffobj[k].tuple[1];
             int pretuple2=suffobj[k-1].tuple[1];
+            // if cur tuple/rank is same as previous tuple/rank then assigned same rank to suffix
             if(curtuple1==preRank && curtuple2==pretuple2)
             {
                 preRank=suffobj[k].tuple[0];
                 suffobj[k].tuple[0]= curRank;
             }
+            //else increment rank by 1 and then assigned to suffix
             else{
                 preRank=suffobj[k].tuple[0];
                 suffobj[k].tuple[0]=++curRank;
@@ -72,6 +81,7 @@ void createsufficArray(string str)
             suffInd[suffobj[k].index]=k;
         }
 
+        //compute "next rank/tuple" for all suffix
         for (int i=0;i<size1;i++) 
         { 
             int nextind = suffobj[i].index + j/2; 
@@ -83,11 +93,12 @@ void createsufficArray(string str)
             }
         } 
   
+        //sort all suffix 
         sort(suffobj, suffobj+size1, comfun); 
 
     }
 
-     // Store indexes of all sorted suffixes in the suffix array 
+    // Store all indexes of sorted suffixes in the suffix array 
     finalsuffixans = new int[size1]; 
     for (int i=0;i<size1;i++)
     {
@@ -107,6 +118,7 @@ int main()
     {
         cout<< finalsuffixans[i]<<" ";
     }
+
     int small=finalsuffixans[0];
     string nextsub=s.substr(small);
     //cout<<nextsub<<endl;
