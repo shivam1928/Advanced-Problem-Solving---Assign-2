@@ -52,6 +52,7 @@ long long findNthSmallest(vector<long long> &arr,long long start,long long end,l
             start=index+1;
         }
         else{
+            // when k==index return element at index
             return arr[index];
         }
     }

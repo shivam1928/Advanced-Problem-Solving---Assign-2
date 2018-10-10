@@ -141,7 +141,7 @@ class Unordered_map
     {
         //printall();
         long long index = getHashIndex(key);
-        cout << "in delete Hash Index : " << index << endl;
+        //cout << "in delete Hash Index : " << index << endl;
         if (hashtable[index] == NULL)
         {
             printf("\nKey not found in Map");

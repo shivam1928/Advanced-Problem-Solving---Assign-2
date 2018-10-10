@@ -215,10 +215,11 @@ int main()
     stringBuilder s3=stringAppend(s1,s2);
     printall(s3);
     s1=stringAppend(s3,s4);
-    s1=stringAppend(s1,s2);
+    s1=stringAppend(s1,s5);
+    printall(s3);
     printall(s1);
     int ind;
-    if((ind=findSubstring(s1,"dofesh")) != -1)
+    if((ind=findSubstring(s1,"ddbjvb")) != -1)
     {
         cout<<"\nPattern found at index : "<<ind<<endl;
     }
