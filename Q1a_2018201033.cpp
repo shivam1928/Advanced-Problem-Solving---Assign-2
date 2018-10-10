@@ -53,7 +53,7 @@ void createsufficArray(string str)
     //sort according to tuple;
     sort(suffobj,suffobj+size1, comfun);
 
-    for(int j=4;j<(2*size1);j=j*2)
+    for(int j=2;j<size1;j=j*2)
     {   
         //initialised rank and index of first suffix;
         int curRank=0;
@@ -84,7 +84,7 @@ void createsufficArray(string str)
         //compute "next rank/tuple" for all suffix
         for (int i=0;i<size1;i++) 
         { 
-            int nextind = suffobj[i].index + j/2; 
+            int nextind = suffobj[i].index + j; 
             if(nextind < size1){
                 suffobj[i].tuple[1]=suffobj[suffInd[nextind]].tuple[0];
             }

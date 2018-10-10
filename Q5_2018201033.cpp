@@ -144,20 +144,27 @@ void mergeallnodestring(stringBuilder &s1)
 
 void preKMPcompute(const char *sub, int patlen, int *kmpNext)
 {
-        int i, j;
-        i = 0;
-        j = kmpNext[0] = -1;
-        while (i < patlen)
-        {
-            while (j > -1 && sub[i] != sub[j])
-                j = kmpNext[j];
-            i++;
-            j++;
-            if (sub[i] == sub[j])
-                kmpNext[i] = kmpNext[j];
+    int len = 0; 
+    kmpNext[0] = 0; 
+    int i = 1; 
+    while (i < patlen) 
+    { 
+        if (sub[i] == sub[len]) { 
+            len++; 
+            kmpNext[i] = len; 
+            i++; 
+        } 
+        else 
+        { 
+            if(len != 0) 
+                len = kmpNext[len - 1];
             else
-                kmpNext[i] = j;
-        }
+            { 
+                kmpNext[i] = 0; 
+                i++; 
+            } 
+        } 
+    }
 }
 
 // find substr from source string s1 and return index founded
@@ -183,25 +190,39 @@ int findSubstring(stringBuilder &s1,const char *substr)
         int patlen = strlen(substr); 
         int sourcelen = strlen(sourcestr); 
 
-        int i, j, kmpNext[patlen];
+        int i = 0; // to keep track of sourcestring
+        int j = 0; // to keep track of substr 
+        int kmpNext[patlen];
+        preKMPcompute(substr, patlen, kmpNext); 
+        while (i < sourcelen) 
+        { 
+            //when sourcestr and substr match incremeent both index i,j
+            if (substr[j] == sourcestr[i]) 
+            { 
+                j++; 
+                i++; 
+            } 
+            // when j reached to its length means substr found and return
+            if (j == patlen) 
+            { 
+                return (i-j);
+            } 
+            //when sourcestr[i] and substr[j] doesn't match
+            else if (i < sourcelen && substr[j] != sourcestr[i]) 
+            { 
 
-        // Compute KmpNext Preprocessing
-        preKMPcompute(substr, patlen, kmpNext);
-
-        // KMP Searching
-        i = j = 0;
-        while (j < sourcelen) 
-        {
-            while (i > -1 && substr[i] != sourcestr[j])
-                i = kmpNext[i];
-            i++;
-            j++;
-            if (i >= patlen) {
-                return (j - i);
-            }
+                //if J is not first index(0) then assigned previous index kmpNext
+                 if (j != 0) 
+                    j = kmpNext[j - 1]; 
+                // if j is 0 then increment i by 1
+                else
+                    i = i + 1; 
+            } 
         }
-        if(j==sourcelen)
+        // if pattern not found in soucestr then return -1
+         if(i==sourcelen)
             return -1;  
+
 
     }
 }
@@ -219,7 +240,7 @@ int main()
     printall(s3);
     printall(s1);
     int ind;
-    if((ind=findSubstring(s1,"ddbjvb")) != -1)
+    if((ind=findSubstring(s1,"of")) != -1)
     {
         cout<<"\nPattern found at index : "<<ind<<endl;
     }
