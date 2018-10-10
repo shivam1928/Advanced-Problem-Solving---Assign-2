@@ -111,21 +111,31 @@ int main()
 {
     string s;
     cin>>s;
-    createsufficArray(s);
-    cout<<"Suffix Array for given string : ";
-    int len=s.length();
-    for(int i=0;i<len;i++)
+
+    string doublestr= s+s;
+    long int len=doublestr.length();
+    //create suffix array on double_string
+    createsufficArray(doublestr);
+    
+    // cout<<"Suffix Array for given string : ";
+    // for(int i=0;i<len;i++)
+    // {
+    //     cout<< finalsuffixans[i]<<" ";
+    // }
+    
+    //cover case CABA -> ABAC
+
+    long int smallindex;
+    for(long int i=0;i<len;i++)
     {
-        cout<< finalsuffixans[i]<<" ";
+        if(finalsuffixans[i]<(s.length()))
+        {
+            smallindex=finalsuffixans[i];
+            break;
+        }
     }
 
-    int small=finalsuffixans[0];
-    string nextsub=s.substr(small);
-    //cout<<nextsub<<endl;
-    string presub=s.substr(0,small);
-    //cout<<presub<<endl;
-    string lexsmallstr=nextsub+presub;
-
+    string lexsmallstr = doublestr.substr(smallindex,s.length());
     cout<<"\nMinimum Lexicographic rotation : "<<lexsmallstr<<endl;
 
     return 0;

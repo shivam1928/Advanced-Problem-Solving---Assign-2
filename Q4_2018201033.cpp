@@ -20,7 +20,7 @@ class Unordered_map
     //Constructor
     Unordered_map()
     {
-        for (int i = 0; i < SIZE; i++)
+        for (long long i = 0; i < SIZE; i++)
         {
             hashtable[i] = NULL;
         }
@@ -29,7 +29,7 @@ class Unordered_map
     void printall()
     {
         cout << "\n*********************" << endl;
-        for (int i = 0; i < SIZE; i++)
+        for (long long i = 0; i < SIZE; i++)
         {
             cout << hashtable[i] << " ";
             if (hashtable[i] != NULL)
