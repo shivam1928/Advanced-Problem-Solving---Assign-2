@@ -1,7 +1,7 @@
 #include <bits/stdc++.h>
 using namespace std;
 
-#define ORDER 4            // Order of BTree
+//#define ORDER 4            // Order of BTree
 const int MAX = ORDER - 1; //MAX number of keys
 const int MIN = MAX / 2; //MIN number of keys
 
